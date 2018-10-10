@@ -5,13 +5,12 @@ Should these functions be const? Explain your choice.
 Exercise 7.9: Add operations to read and print Person objects to the code you wrote for the exercises in ? 7.1.2 (p. 260).
 Exercise 7.15: Add appropriate constructors to your Person class.
 Exercise 7.22: Update your Person class to hide its implementation.*/
+#ifndef PERSON_H
+#define PERSON_H
 
 #include <iostream>
 
 using namespace std;
-
-#ifndef PERSON_H
-#define PERSON_H
 
 class Person {
 friend istream& read(istream&, Person&);
