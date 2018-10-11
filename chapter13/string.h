@@ -26,6 +26,8 @@ public:
   String &insert(size_t p, const char &c);
   String &insert(size_t p, const String &str);
   String &insert(size_t p, const char *cStr);
+  char &operator[](size_t n);
+  const char &operator[](std::size_t n) const;
 private:
   std::allocator<char> alloc;
   void check_cap() {if (size() == capacity()) reallocate();}
@@ -37,4 +39,6 @@ private:
   void reallocate();
 };
 
+std::ostream &operator<<(std::ostream &os, const String &str);
+bool operator==(const String &str1, const String &str2);
 #endif

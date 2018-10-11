@@ -1,6 +1,7 @@
 #include "string.h"
 #include <iostream>
 #include <stdexcept>
+#include <string.h>
 
 using namespace std;
 
@@ -19,7 +20,7 @@ void String::free() {
 }
 
 String::String(const char *cStr) {
-  size_t len = sizeof(cStr) / sizeof(cStr[0]);
+  size_t len = strlen(cStr);
   auto newStr = alloc_n_copy(cStr, len);
   first = newStr.first;
   last = cap = newStr.second;
@@ -33,7 +34,7 @@ String::String(const String &str) {
 }
 
 String &String::operator=(const char *cStr) {
-  size_t len = sizeof(cStr) / sizeof(cStr[0]);
+  size_t len = strlen(cStr);
   auto newStr = alloc_n_copy(cStr, len);
   free();
   first = newStr.first;
@@ -66,7 +67,7 @@ void String::reallocate() {
 
 String &String::insert(size_t p, const char &c) {
   if (p < 0 || p > size()) {
-    throw out_of_range("Wrong position to insert");
+    throw out_of_range("Position to insert out of range");
   }
   if (cap == last) {
     reallocate();
@@ -83,7 +84,7 @@ String &String::insert(size_t p, const char &c) {
 String &String::insert(size_t p, const String &str) {
   size_t insertSize = str.size();
   if (p < 0 || p > size()) {
-    throw out_of_range("Wrong position to insert");
+    throw out_of_range("Position to insert out of range");
   }
   while (size() + insertSize > capacity()) {
     reallocate();
@@ -97,9 +98,9 @@ String &String::insert(size_t p, const String &str) {
 }
 
 String &String::insert(size_t p, const char *cStr) {
-  size_t insertSize = sizeof(cStr) / sizeof(cStr[0]);
+  size_t insertSize = strlen(cStr);
   if (p < 0 || p > size()) {
-    throw out_of_range("Wrong position to insert");
+    throw out_of_range("Position to insert out of range");
   }
   while (size() + insertSize > capacity()) {
     reallocate();
@@ -110,4 +111,40 @@ String &String::insert(size_t p, const char *cStr) {
   copy(cStr, cStr + insertSize, first + p);
   last = last + insertSize;
   return *this;
+}
+
+char &String::operator[](size_t n) {
+  if (n < 0 || n >= size()) {
+    cerr << "Index out of range" << endl;
+    // throw out_of_range("Index out of range");
+  }
+  return *(first + n);
+}
+
+const char &String::operator[](size_t n) const {
+  if (n < 0 || n >= size()) {
+    cerr << "Index out of range" << endl;
+    // throw out_of_range("Index out of range");
+  }
+  return *(first + n);
+}
+
+ostream &operator<<(ostream &os, const String &str) {
+  auto itr = str.begin();
+  while(itr != str.end()) {
+    os << *itr++;
+  }
+  return os;
+}
+
+bool operator==(const String &str1, const String &str2) {
+  if (str1.size() != str2.size()) {
+    return false;
+  }
+  for (auto itr1 = str1.begin(), itr2 = str2.begin(); itr1 != str1.end(); ++itr1, ++itr2) {
+    if (*itr1 != *itr2) {
+      return false;
+    }
+  }
+  return true;
 }
