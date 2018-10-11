@@ -10,31 +10,47 @@ int main() {
   String str1(cStr1);
   String str2(str1);
   String str3 = cStr1;
-  String str4 = str3;
+  const String str4 = str3;
   cout << "str1: " << str1 << endl;
   cout << "str2: " << str1 << endl;
   cout << "str3: " << str1 << endl;
   cout << "str4: " << str1 << endl;
 
-  char *cStr3 = (char*)"Tian";
+  char *cStr3 = (char*)" Tian";
   String str5((char*)"Yuan");
-  str1.insert(6, 'y');
-  str2.insert(6, str5);
-  str3.insert(6, cStr3);
   cout << endl;
+
+  str1.insert(6, 'y');
   cout << "After insertion:" << endl;
   cout << "str1: " << str1 << endl;
   String *strTemp = new String((char*)"Hello,y world!");
   assert(str1 == *strTemp);
 
+  str2.insert(6, str5);
   cout << "str2: " << str2 << endl;
   strTemp = new String((char*)"Hello,Yuan world!");
   assert(str2 == *strTemp);
 
+  str3.insert(13, cStr3);
   cout << "str3: " << str3 << endl;
-  strTemp = new String((char*)"Hello,Tian world!");
+  strTemp = new String((char*)"Hello, world! Tian");
   assert(str3 == *strTemp);
+  assert(*str3.begin() == 'H');
+  assert(str3.size() == 18);
+
+  cout << endl;
+  str1.erase(6);
+  cout << "After erasion:" << endl;
+  cout << "str1: " << str1 << endl;
+  strTemp = new String(cStr1);
+  assert(str1 == *strTemp);
+
+  str2.erase(6, 10);
+  cout << "str2: " << str2 << endl;
+  assert(str2 == *strTemp);
   delete strTemp;
+
+  // str3.erase(10, 6);
 
   cout << endl;
   cout << "str4[3]: " << str4[3] << endl;

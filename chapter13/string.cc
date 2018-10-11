@@ -66,9 +66,11 @@ void String::reallocate() {
 }
 
 String &String::insert(size_t p, const char &c) {
-  if (p < 0 || p > size()) {
-    throw out_of_range("Position to insert out of range");
+  if (p > size()) {
+    cerr << "Position to insert out of range" << endl;
+    //throw out_of_range("Position to insert out of range");
   }
+
   if (cap == last) {
     reallocate();
   }
@@ -82,10 +84,12 @@ String &String::insert(size_t p, const char &c) {
 }
 
 String &String::insert(size_t p, const String &str) {
-  size_t insertSize = str.size();
-  if (p < 0 || p > size()) {
-    throw out_of_range("Position to insert out of range");
+  if (p > size()) {
+    cerr << "Position to insert out of range" << endl;
+    //throw out_of_range("Position to insert out of range");
   }
+
+  size_t insertSize = str.size();
   while (size() + insertSize > capacity()) {
     reallocate();
   }
@@ -98,10 +102,12 @@ String &String::insert(size_t p, const String &str) {
 }
 
 String &String::insert(size_t p, const char *cStr) {
-  size_t insertSize = strlen(cStr);
-  if (p < 0 || p > size()) {
-    throw out_of_range("Position to insert out of range");
+  if (p > size()) {
+    cerr << "Position to insert out of range" << endl;
+    // throw out_of_range("Position to insert out of range");
   }
+
+  size_t insertSize = strlen(cStr);
   while (size() + insertSize > capacity()) {
     reallocate();
   }
@@ -113,8 +119,38 @@ String &String::insert(size_t p, const char *cStr) {
   return *this;
 }
 
+String &String::erase(size_t p) {
+  if (p > size()) {
+    cerr << "Position to erase out of range" << endl;
+    // throw out_of_range("Position to erase out of range");
+  }
+  for (auto itr = first + p; itr < last - 1; ++itr) {
+    *itr = *(itr + 1);
+  }
+  alloc.destroy(last - 1);
+  last--;
+  return *this;
+}
+
+String &String::erase(size_t pFirst, size_t pLast) {
+  if (pFirst > size() || pLast > size() || pFirst >= pLast) {
+    cerr << "Position to erase out of range" << endl;
+    // throw out_of_range("Position to erase out of range");
+  }
+
+  size_t eraseSize = pLast - pFirst;
+  for (auto itr = first + pFirst; itr != last - eraseSize; ++itr) {
+    *itr = *(itr + eraseSize);
+  }
+  for (auto itr = last; itr != last - eraseSize;) {
+    alloc.destroy(--itr);
+  }
+  last = last - eraseSize;
+  return *this;
+}
+
 char &String::operator[](size_t n) {
-  if (n < 0 || n >= size()) {
+  if (n >= size()) {
     cerr << "Index out of range" << endl;
     // throw out_of_range("Index out of range");
   }
@@ -122,7 +158,7 @@ char &String::operator[](size_t n) {
 }
 
 const char &String::operator[](size_t n) const {
-  if (n < 0 || n >= size()) {
+  if (n >= size()) {
     cerr << "Index out of range" << endl;
     // throw out_of_range("Index out of range");
   }

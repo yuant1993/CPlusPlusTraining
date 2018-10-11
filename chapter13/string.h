@@ -26,6 +26,8 @@ public:
   String &insert(size_t p, const char &c);
   String &insert(size_t p, const String &str);
   String &insert(size_t p, const char *cStr);
+  String &erase(size_t p);
+  String &erase(size_t pFirst, size_t pLast);
   char &operator[](size_t n);
   const char &operator[](std::size_t n) const;
 private:
