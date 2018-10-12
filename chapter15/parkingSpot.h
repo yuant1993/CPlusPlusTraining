@@ -6,12 +6,17 @@
 
 class ParkingSpot {
 public:
-  PakringSpot() = default;
-  PakringSpot(PakringLot *pl, Vehicle *v): parkingLot(pl), vehicle(v), taken(false) {}
-  bool isTaken() const {return taken;}
+  PakringSpot() = delete;
+  PakringSpot(int id, PakringLot *pl): pakringSpotId(id), parkingLot(pl), taken(false) {}
+  PakringSpot(int id, PakringLot *pl, Vehicle *v): pakringSpotId(id), parkingLot(pl), vehicle(v), taken(false) {}
+  int getParkingSpotId() const {return parkingSpotId;}
+  PakringLot *getParkingLot() const {return parkingLot;}
   Vehicle *getVehicle() const {return vehicle;}
   void parkVehicle(Vehicle *v) {vehicle = v;}
+  bool isTaken() const {return taken;}
+  void setTaken() {taken = true;}
 private:
+  int parkingSpotId;
   PakringLot *parkingLot;
   Vehicle *vehicle;
   bool taken;
