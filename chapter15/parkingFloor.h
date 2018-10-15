@@ -9,6 +9,7 @@
 class ParkingFloor {
   friend void ParkingLot::addParkingFloor(ParkingFloor *pf);
   friend void Vehicle::park(SingleLevelParkingLot *pl);
+  friend void Vehicle::unPark();
 public:
   ParkingFloor() = delete;
   ParkingFloor(int fId, double spotl, double spotw, double spacel, double spacew):
@@ -19,8 +20,8 @@ public:
   double getSpotLength() const {return spotLength;}
   double getSpotWidth() const {return spotWidth;}
   std::vector<PakringSpot*> getParkingSpots() const {return parkingSpots;}
+  std::queue<ParkingSpot*> getUntakenSpots() const {return untakenSpots;}
   void addParkingSpot(ParkingSpot *ps);
-  std::queue getUntakenSpots() const {return untakenSpots;}
   ParkingLot *getParkingLot() const {return parkingLot;}
   int getNumTaken() const {return parkingSpots.size() - untakenSpots();}
   bool isFullSpots() const {return fullSpots;}

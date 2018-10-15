@@ -12,6 +12,7 @@ public:
   ParkingLot *getParkingSpot() const {return parkingSpot;}
   void park(SingleLevelParkingLot *pl);
   void park(MultiLevelParkingLot *pl);
+  void unPark();
 private:
   std::string plate;
   double length;

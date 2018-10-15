@@ -12,14 +12,11 @@ public:
   int getParkingSpotId() const {return parkingSpotId;}
   PakringFloor *getParkingFloor() const {return parkingFloor;}
   Vehicle *getVehicle() const {return vehicle;}
-  void parkVehicle(Vehicle *v) {vehicle = v;}
-  bool isTaken() const {return taken;}
-  void setTaken() {taken = true;}
+  void setVehicle(Vehicle *v) {vehicle = v;}
 private:
   int parkingSpotId;
   PakringFloor *parkingFloor;
   Vehicle *vehicle;
-  bool taken;
 };
 
 #endif

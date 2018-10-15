@@ -1,5 +1,6 @@
 #include "vehicle.h"
 #include <iostream>
+#include <typeinfo>
 
 using namespace std;
 
@@ -11,7 +12,7 @@ void Vehicle::park(SingleLevelParkingLot *pl) {
   if (pf -> getSpotLength() - pf -> space >= length && pf -> getSpotWidth() - pf -> space >= width) {
     queue<ParkingSpot*> uts = pf -> untakenSpots();
     parkingSpot = uts.front();
-    parkingSpot.parkVehicle(this);
+    parkingSpot.setVehicle(this);
     uts.pop();
     if (uts.empty()) {
       pf -> fullVehicles = true;
@@ -35,9 +36,9 @@ void Vehicle::park(MultiLevelParkingLot *pl) {
       continue;
     }
     if (*itr -> getSpotLength() - *itr -> space >= length && *itr -> getSpotWidth() - *itr -> space >= width) {
-      queue<ParkingSpot*> uts = *itr -> untakenSpots();
+      queue<ParkingSpot*> &uts = *itr -> untakenSpots();
       parkingSpot = uts.front();
-      parkingSpot.parkVehicle(this);
+      parkingSpot.setVehicle(this);
       uts.pop();
       if (uts.empty()) {
         pf -> fullVehicles = true;
@@ -49,3 +50,20 @@ void Vehicle::park(MultiLevelParkingLot *pl) {
     }
   }
 }
+
+void Vehicle::unPark() {
+  parkingSpot -> setVehicle(nullptr);
+  ParkingFloor *pf = parkingSpot -> getParkingFloor();
+  pf -> untakenSpots.push(parkingSpot);
+  parkingSpot = nullptr;
+  if (pf -> isFullVehicles()) {
+    fullVehicles = false;
+    ParkingLot *pl = pf -> getParkingLot();
+    if (typeid(*pl).name() == "MultiLevelParkingLot") {
+        pl -> numAvailableFloors++;
+    }
+    if (pl -> isFullVehicles()) {
+      fullVehicles = false;
+    }
+  }
+};

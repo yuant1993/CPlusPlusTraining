@@ -7,6 +7,7 @@
 
 class ParkingLot {
   friend void Vehicle::park(SingleLevelParkingLot *pl);
+  friend void Vehicle::unPark();
 public:
   ParkingLot() = delete;
   ParkingLot(double l, double w): length(l), width(w), full(false) {}
