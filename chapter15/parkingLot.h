@@ -6,6 +6,7 @@
 #include <vector>
 
 class ParkingLot {
+  friend void Vehicle::park(SingleLevelParkingLot *pl);
 public:
   ParkingLot() = delete;
   ParkingLot(double l, double w): length(l), width(w), full(false) {}
@@ -14,24 +15,24 @@ public:
   virtual ~ParkingLot();
   double getLength() const {return length;}
   double getWidth() const {return width;}
-  bool isFull() const {return full;}
-  void setFull() {return full = true;}
-  virtual void setParkingFloor() = 0;
+  bool isFullFloors() const {return fullFloors;}
+  bool isFullVehicles() const {return fullVehicles;}
+  virtual void addParkingFloor(ParkingFloor *pf) = 0;
 private:
   double length;
   double width;
-  bool full;
+  bool fullFloors;
+  bool fullVehicles;
 };
 
 class SingleLevelParkingLot: public ParkingLot {
 public:
   SingleLevelParkingLot() = delete;
   SingleLevelParkingLot(double l, double w): ParkingLot(l, w) {}
-  SingleLevelParkingLot(double l, double w, ParkingFloor *pf): ParkingLot(l, w), parkingFloor(pf) {}
   SingleLevelParkingLot(const SingleLevelParkingLot&);
   SingleLevelParkingLot &operator=(const SingleLevelParkingLot&);
   ParkingFloor *getParkingFloor() {return parkingFloor;}
-  void setParkingFloor(ParkingFloor *pf) {parkingFloor = pf};
+  void addParkingFloor(ParkingFloor *pf);
 private:
   ParkingFloor *parkingFloor;
 };
@@ -39,15 +40,15 @@ private:
 class MultiLevelParkingLot: public ParkingLot {
 public:
   MultiLevelParkingLot() = delete;
-  MultiLevelParkingLot(double l, double w, int f): ParkingLot(l, w), numFloor(f), ParkingLoLots(f) {}
-  MultiLevelParkingLot(double l, double w, int f, vector<ParkingLotLot*> vec) : ParkingLot(l, w), numFloor(f), ParkingLotLots(vec) {}
+  MultiLevelParkingLot(double l, double w, int f): ParkingLot(l, w), numFloor(f), numAvailableFloors(f) {}
   MultiLevelParkingLot(const MultiLevelParkingLot&);
   MultiLevelParkingLot &operator=(const MultiLevelParkingLot&);
   int getnumFloor() {return numFloor;}
   std::vector<ParkingFloor*> getParkingFloors() {return parkingFloors;}
-  void setParkingFloor(ParkingFloor *pf) {parkingFloors.push_back(pf)};
+  void addParkingFloor(ParkingFloor *pf);
 private:
   int numFloor;
+  int numAvailableFloors;
   std::vector<ParkingFloor*> parkingFloors;
 };
 

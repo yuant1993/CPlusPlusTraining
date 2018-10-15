@@ -5,19 +5,19 @@
 #include <iostream>
 
 class ParkingSpot {
+  friend void ParkingFloor::addParkingSpot(ParkingSpot *ps);
 public:
   PakringSpot() = delete;
-  PakringSpot(int id, PakringLot *pl): pakringSpotId(id), parkingLot(pl), taken(false) {}
-  PakringSpot(int id, PakringLot *pl, Vehicle *v): pakringSpotId(id), parkingLot(pl), vehicle(v), taken(false) {}
+  PakringSpot(int id): pakringSpotId(id), taken(false) {}
   int getParkingSpotId() const {return parkingSpotId;}
-  PakringLot *getParkingLot() const {return parkingLot;}
+  PakringFloor *getParkingFloor() const {return parkingFloor;}
   Vehicle *getVehicle() const {return vehicle;}
   void parkVehicle(Vehicle *v) {vehicle = v;}
   bool isTaken() const {return taken;}
   void setTaken() {taken = true;}
 private:
   int parkingSpotId;
-  PakringLot *parkingLot;
+  PakringFloor *parkingFloor;
   Vehicle *vehicle;
   bool taken;
 };

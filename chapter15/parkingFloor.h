@@ -2,42 +2,39 @@
 #define PARKINGFLOOR_H
 
 #include "parkingSpot.h"
+#include "parkingLot.h"
+#include "vehicle.h"
 #include <iostream>
 
 class ParkingFloor {
-  friend Vehicle;
+  friend void ParkingLot::addParkingFloor(ParkingFloor *pf);
+  friend void Vehicle::park(SingleLevelParkingLot *pl);
 public:
   ParkingFloor() = delete;
   ParkingFloor(int fId, double spotl, double spotw, double spacel, double spacew):
     floorId(fId), spotLength(spotl), spotWidth(spotw), spaceLength(spacel), spaceWidth(spacew), numTaken(0), full(false) {}
   ParkingFloor(const ParkingFloor&);
   ParkingFloor &operator=(const ParkingFloor&);
+  static double space;
   double getSpotLength() const {return spotLength;}
   double getSpotWidth() const {return spotWidth;}
-  double getSpaceLength() const {return spaceLength;}
-  double getSpaceWidth() const {return spaceWidth;}
   std::vector<PakringSpot*> getParkingSpots() const {return parkingSpots;}
-  void setParkingSpots(ParkingSpot *ps) {
-    parkingSpots.push_back(ps);
-    untakenSpots.push(ps);
-  }
+  void addParkingSpot(ParkingSpot *ps);
   std::queue getUntakenSpots() const {return untakenSpots;}
-  int getNumTaken() const {return numTaken;}
-  void setNumTaken();
-  bool isFull() const {return full;}
-  void setFull() {full = true;}
+  ParkingLot *getParkingLot() const {return parkingLot;}
+  int getNumTaken() const {return parkingSpots.size() - untakenSpots();}
+  bool isFullSpots() const {return fullSpots;}
+  bool isFullVehicles() const {return fullVehicles;}
   int capacity() const;
 private:
   int floorId;
   double spotLength;
   double spotWidth;
-  double spaceLength;
-  double spaceWidth;
   std::vector<ParkingSpot*> parkingSpots;
   std::queue<ParkingSpot*> untakenSpots;
   ParkingLot *parkingLot;
-  int numTaken;
-  bool full;
+  bool fullSpots;
+  bool fullVehicles;
 };
 
 #endif
