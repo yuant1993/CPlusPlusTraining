@@ -15,8 +15,8 @@ void Vehicle::park(SingleLevelParkingLot *pl) {
     parkingSpot.setVehicle(this);
     uts.pop();
     if (uts.empty()) {
-      pf -> fullVehicles = true;
-      pl -> fullVehicles = true;
+      pf.setFullVehicles();
+      pl.setFullVehicles();
     }
   } else {
     cerr << "No parking spot available." << endl;
@@ -36,15 +36,15 @@ void Vehicle::park(MultiLevelParkingLot *pl) {
       continue;
     }
     if (*itr -> getSpotLength() - *itr -> space >= length && *itr -> getSpotWidth() - *itr -> space >= width) {
-      queue<ParkingSpot*> &uts = *itr -> untakenSpots();
+      queue<ParkingSpot*> &uts = *itr -> getUntakenSpots();
       parkingSpot = uts.front();
       parkingSpot.setVehicle(this);
       uts.pop();
       if (uts.empty()) {
-        pf -> fullVehicles = true;
-        pf -> numAvailableFloors--;
-        if (pf -> numAvailableFloors == 0) {
-          pl -> fullVehicles = true;
+        pf -> setFullVehicles();
+        pf -> increseNumAvailableFloors();
+        if (pf -> getGumAvailableFloors() == 0) {
+          pl -> setFullVehicles();
         }
       }
     }
@@ -54,16 +54,16 @@ void Vehicle::park(MultiLevelParkingLot *pl) {
 void Vehicle::unPark() {
   parkingSpot -> setVehicle(nullptr);
   ParkingFloor *pf = parkingSpot -> getParkingFloor();
-  pf -> untakenSpots.push(parkingSpot);
+  pf -> pushUntakenSpots(parkingSpot);
   parkingSpot = nullptr;
   if (pf -> isFullVehicles()) {
-    fullVehicles = false;
+    pf -> unsetFullVehicles();
     ParkingLot *pl = pf -> getParkingLot();
     if (typeid(*pl).name() == "MultiLevelParkingLot") {
-        pl -> numAvailableFloors++;
+        (pl -> getNumAvailableFloors())++;
     }
     if (pl -> isFullVehicles()) {
-      fullVehicles = false;
+      pl -> unsetFullVehicles();;
     }
   }
 };

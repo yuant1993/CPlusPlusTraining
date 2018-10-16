@@ -1,22 +1,25 @@
 #ifndef PARKINGSPOT_H
 #define PARKINGSPOT_H
 
-#include "vehicle.h"
+// #include "vehicle.h"
+// #include "parkingFloor.h"
 #include <iostream>
 
+class ParkingFloor;
+
 class ParkingSpot {
-  friend void ParkingFloor::addParkingSpot(ParkingSpot *ps);
 public:
-  PakringSpot() = delete;
-  PakringSpot(int id): pakringSpotId(id), taken(false) {}
+  ParkingSpot() = delete;
+  ParkingSpot(int id): parkingSpotId(id), parkingFloor(nullptr) {}
   int getParkingSpotId() const {return parkingSpotId;}
-  PakringFloor *getParkingFloor() const {return parkingFloor;}
-  Vehicle *getVehicle() const {return vehicle;}
-  void setVehicle(Vehicle *v) {vehicle = v;}
+  ParkingFloor *getParkingFloor() const {return parkingFloor;}
+  void setParkingFloor(ParkingFloor *pf) {parkingFloor = pf;}
+  // Vehicle *getVehicle() const {return vehicle;}
+  // void setVehicle(Vehicle *v) {vehicle = v;}
 private:
   int parkingSpotId;
-  PakringFloor *parkingFloor;
-  Vehicle *vehicle;
+  ParkingFloor *parkingFloor;
+  // Vehicle *vehicle;
 };
 
 #endif
