@@ -1,7 +1,6 @@
 #ifndef PARKINGFLOOR_H
 #define PARKINGFLOOR_H
 
-// #include "parkingLot.h"
 #include "parkingSpot.h"
 #include <iostream>
 #include <vector>
@@ -12,13 +11,14 @@ class ParkingLot;
 class ParkingFloor {
 public:
   ParkingFloor() = delete;
-  ParkingFloor(int fId, double spotl, double spotw):
-    floorId(fId), spotLength(spotl), spotWidth(spotw), parkingLot(nullptr), fullSpots(false), fullVehicles(false) {}
+  ParkingFloor(int fId, double spotl, double spotw, double f):
+    floorId(fId), spotLength(spotl), spotWidth(spotw), fare(f), parkingLot(nullptr), fullSpots(false), fullVehicles(false) {}
   ParkingFloor(const ParkingFloor&);
   ParkingFloor &operator=(const ParkingFloor&);
   static double space;
   double getSpotLength() const {return spotLength;}
   double getSpotWidth() const {return spotWidth;}
+  double getFare() const {return fare;}
   std::vector<ParkingSpot*> getParkingSpots() const {return parkingSpots;}
   std::queue<ParkingSpot*> getUntakenSpots() const {return untakenSpots;}
   void pushUntakenSpots(ParkingSpot *ps) {untakenSpots.push(ps);}
@@ -36,6 +36,7 @@ private:
   int floorId;
   double spotLength;
   double spotWidth;
+  double fare;
   std::vector<ParkingSpot*> parkingSpots;
   std::queue<ParkingSpot*> untakenSpots;
   ParkingLot *parkingLot;
