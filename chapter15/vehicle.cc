@@ -51,6 +51,7 @@ void Vehicle::park(MultiLevelParkingLot *pl) {
           pl -> setFullVehicles();
         }
       }
+      break;
     }
   }
 }

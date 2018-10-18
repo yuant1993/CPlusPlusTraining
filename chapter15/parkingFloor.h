@@ -16,6 +16,7 @@ public:
   ParkingFloor(const ParkingFloor&);
   ParkingFloor &operator=(const ParkingFloor&);
   static double space;
+  double getFloorId() const {return floorId;}
   double getSpotLength() const {return spotLength;}
   double getSpotWidth() const {return spotWidth;}
   double getFare() const {return fare;}
