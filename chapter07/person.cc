@@ -3,6 +3,10 @@
 
 using namespace std;
 
+Person::Person(istream &is) {
+  read(is, *this);
+}
+
 string Person::getName() const {
   return _name;
 }

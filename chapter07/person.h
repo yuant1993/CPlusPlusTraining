@@ -16,8 +16,9 @@ class Person {
 
 public:
   Person() = delete;
-  Person(const std::string& n) : _name(n) {}
-  Person(const std::string& n, const std::string& a) : _name(n), _address(a) {}
+  Person(const std::string &n) : _name(n) {}
+  Person(const std::string &n, const std::string &a) : _name(n), _address(a) {}
+  Person(std::istream &is);
   std::string getName() const;
   void setName(std::string name);
   std::string getAddress() const;
