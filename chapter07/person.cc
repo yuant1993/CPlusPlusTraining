@@ -4,15 +4,28 @@
 using namespace std;
 
 string Person::getName() const {
-  return name;
+  return _name;
+}
+
+void Person::setName(string name) {
+  _name = name;
 }
 
 string Person::getAddress() const {
-  return address;
+  return _address;
+}
+
+void Person::setAddress(string address) {
+  _address = address;
 }
 
 istream& read(istream& is, Person& per) {
-  is >> per.name >> per.address;
+  string name, address;
+  getline(is, name);
+  per.setName(name);
+  getline(is, address);
+  per.setAddress(address);
+  // is >> per.name >> per.address;
 
   return is;
 }
