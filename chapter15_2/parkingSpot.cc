@@ -11,15 +11,15 @@ ParkingSpot::ParkingSpot(int parkingFloorId, ParkingLotManager* plm, Type type) 
     std::unordered_map<Type, ParkingInfo> availableMap = plm -> getAvailableMap();
     if (availableMap.count(type) == 0) {
       ParkingInfo parkingInfo(type);
-      parkingInfo.setSpotsMap(parkingFloorId, _spotId);
+      parkingInfo.setSpotsMap(parkingFloorId, _spotId, true);
       plm -> setAvailableMap(type, parkingInfo);
     } else {
       ParkingInfo parkingInfo = availableMap[type];
-      parkingInfo.setSpotsMap(parkingFloorId, _spotId);
+      parkingInfo.setSpotsMap(parkingFloorId, _spotId, true);
       plm -> setAvailableMap(type, parkingInfo);
     }
 
     std::vector<ParkingFloor*> parkingFloors = plm -> getParkingFloors();
     parkingFloors[parkingFloorId] -> addParkingSpotsIds(_spotId);
-    parkingFloors[parkingFloorId] -> addUntakenSpotsIds(_spotId);
+    // parkingFloors[parkingFloorId] -> addUntakenSpotsIds(_spotId);
   }

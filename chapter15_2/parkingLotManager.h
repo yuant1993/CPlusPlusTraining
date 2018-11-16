@@ -25,6 +25,8 @@ public:
   }
   std::unordered_map<Type, ParkingInfo> getAvailableMap() const {return _availableMap;}
   void setAvailableMap(Type type, ParkingInfo parkingInfo) {_availableMap[type] = parkingInfo;}
+  void park(Vehicle v);
+  void unpark(Vehicle v);
 private:
   std::string _name;
   std::vector<ParkingFloor*> _parkingFloors;
@@ -32,6 +34,7 @@ private:
   std::vector<Vehicle*> _vehicles;
   std::unordered_map<std::string, int> _vehicleMap;
   std::unordered_map<Type, ParkingInfo> _availableMap;
+  void parkHelper(Vehicle &v);
 };
 
 #endif

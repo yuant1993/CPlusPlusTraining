@@ -3,7 +3,7 @@
 
 #include "type.h"
 #include <iostream>
-#include <unordered_map>
+#include <map>
 #include <vector>
 
 class ParkingInfo {
@@ -12,12 +12,16 @@ public:
   ParkingInfo(Type type) : _type(type) {}
   Type getType() const {return _type;}
   auto getSpotsMap() const {return _spotsMap;}
-  void setSpotsMap(int floorId, int spotId) {
-    _spotsMap[floorId].push_back(spotId);
+  void setSpotsMap(int floorId, int spotId, bool isAdd) {
+    if (isAdd) {
+      _spotsMap[floorId].push_back(spotId);
+    } else {
+      _spotsMap[floorId].pop_back();
+    }
   };
 private:
   Type _type;
-  std::unordered_map<int, std::vector<int>> _spotsMap;
+  std::map<int, std::vector<int>> _spotsMap;
 };
 
 #endif

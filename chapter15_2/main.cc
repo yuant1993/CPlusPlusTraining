@@ -2,6 +2,7 @@
 #include "parkingFloor.h"
 #include "parkingSpot.h"
 #include "type.h"
+#include "vehicle.h"
 #include <iostream>
 #include <vector>
 
@@ -15,7 +16,7 @@ int main() {
   ParkingSpot ps1(pf0.getFloorId(), &plm, Type::LARGE);
   cout << "number of plm's parking spots: " << plm.numParkingSpots() << endl;
   cout << "number of pf1's parking spots: " << pf0.numParkingSpots() << endl;
-  cout << "number of pf1's untaken parking spots: " << pf0.numUntakenSpots() << endl;
+  // cout << "number of pf1's untaken parking spots: " << pf0.numUntakenSpots() << endl;
   auto availableMap = plm.getAvailableMap();
   cout << "availableMap size: " << availableMap.size() << endl;
   for (auto itr = availableMap.begin(); itr != availableMap.end(); ++itr) {
@@ -39,4 +40,5 @@ int main() {
       cout << endl;
     }
   }
+  Vehicle v1("aaaaa", Type::LARGE);
 }
