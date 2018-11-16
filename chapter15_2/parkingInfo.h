@@ -8,6 +8,7 @@
 
 class ParkingInfo {
 public:
+  ParkingInfo() = default;
   ParkingInfo(Type type) : _type(type) {}
   Type getType() const {return _type;}
   auto getSpotsMap() const {return _spotsMap;}
