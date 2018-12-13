@@ -15,6 +15,7 @@ public:
   ParkingSpot() = default;
   ParkingSpot(int parkingFloorId, ParkingLotManager* plm, Type type);
   int getSpotId() const {return _spotId;}
+  int getFloorId() const {return _parkingFloorId;}
   void setOccupied(bool isOccupied) {_isOccupied = isOccupied;}
   int getVehicleId() const {return _vehicleId;}
   void setVehicleId(int vid) {_vehicleId = vid;}

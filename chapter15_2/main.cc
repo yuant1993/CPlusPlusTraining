@@ -12,8 +12,8 @@ int main() {
   ParkingLotManager plm("The First ParkingLot");
   ParkingFloor pf0(&plm);
   cout << "number of plm's parking floors: " << plm.numParkingFloors() << endl;
-  ParkingSpot ps0(pf0.getFloorId(), &plm, Type::LARGE);
-  ParkingSpot ps1(pf0.getFloorId(), &plm, Type::LARGE);
+  ParkingSpot ps0(pf0.getFloorId(), &plm, Type::MEDIUM);
+  ParkingSpot ps1(pf0.getFloorId(), &plm, Type::SMALL);
   cout << "number of plm's parking spots: " << plm.numParkingSpots() << endl;
   cout << "number of pf1's parking spots: " << pf0.numParkingSpots() << endl;
   // cout << "number of pf1's untaken parking spots: " << pf0.numUntakenSpots() << endl;
@@ -33,12 +33,22 @@ int main() {
       cout << "floor: " << itr1 -> first;
 
       auto spots = itr1 -> second;
+      cout << " spots: ";
       for (auto itr2 = spots.begin(); itr2 != spots.end(); ++itr2) {
-        cout << " spot: " << *itr2;
+        cout << *itr2 << " ";
       }
 
       cout << endl;
     }
   }
-  Vehicle v1("aaaaa", Type::LARGE);
+  Vehicle v1("aaaaa", Type::SMALL);
+  plm.park(&v1);
+  cout << "After Parking:" << endl;
+  cout << "v1's spot: " << v1.getParkingDetail().getSpotId() << endl;
+  cout << "vehicles's size: " << plm.numVehicles() << endl;
+  plm.unpark("aaaaa");
+  cout << endl;
+  cout << "After Unparking:" << endl;
+  cout << "v1's spot: " << v1.getParkingDetail().getSpotId() << endl;
+  cout << "vehicles's size: " << plm.numVehicles() << endl;
 }

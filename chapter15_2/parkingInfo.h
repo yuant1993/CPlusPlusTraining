@@ -4,7 +4,7 @@
 #include "type.h"
 #include <iostream>
 #include <map>
-#include <vector>
+#include <unordered_set>
 
 class ParkingInfo {
 public:
@@ -12,16 +12,10 @@ public:
   ParkingInfo(Type type) : _type(type) {}
   Type getType() const {return _type;}
   auto getSpotsMap() const {return _spotsMap;}
-  void setSpotsMap(int floorId, int spotId, bool isAdd) {
-    if (isAdd) {
-      _spotsMap[floorId].push_back(spotId);
-    } else {
-      _spotsMap[floorId].pop_back();
-    }
-  };
+  void setSpotsMap(int floorId, int spotId, bool isAdd);
 private:
   Type _type;
-  std::map<int, std::vector<int>> _spotsMap;
+  std::map<int, std::unordered_set<int>> _spotsMap;
 };
 
 #endif

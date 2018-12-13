@@ -15,18 +15,19 @@ public:
   ParkingLotManager(std::string name) : _name(name) {}
   std::vector<ParkingFloor*> getParkingFloors() const {return _parkingFloors;}
   std::vector<ParkingSpot*> getParkingSpots() const {return _parkingSpots;}
+  std::vector<Vehicle*> getVehicles() const {return _vehicles;}
   int numParkingFloors() const {return _parkingFloors.size();}
   int numParkingSpots() const {return _parkingSpots.size();}
+  int numVehicles() const {return _vehicles.size();}
   void addParkingFloor(ParkingFloor* pf) {_parkingFloors.push_back(pf);}
   void addParkingSpot(ParkingSpot* ps) {_parkingSpots.push_back(ps);}
-  void addVehicle(Vehicle* v) {
-    _vehicles.push_back(v);
-    _vehicleMap[v -> getLisenceId()] = _vehicles.size() - 1;
-  }
+  int addVehicle(Vehicle* v);
+  std::unordered_map<std::string, int> getVehicleMap() const {return _vehicleMap;}
+  void setVehicleMap(std::string lisenceId, int vehicleId, bool isAdd);
   std::unordered_map<Type, ParkingInfo> getAvailableMap() const {return _availableMap;}
-  void setAvailableMap(Type type, ParkingInfo parkingInfo) {_availableMap[type] = parkingInfo;}
-  void park(Vehicle v);
-  void unpark(Vehicle v);
+  void setAvailableMap(Type type, ParkingInfo parkingInfo, bool isAdd);
+  void park(Vehicle *v);
+  double unpark(std::string lisenceId);
 private:
   std::string _name;
   std::vector<ParkingFloor*> _parkingFloors;
@@ -34,7 +35,7 @@ private:
   std::vector<Vehicle*> _vehicles;
   std::unordered_map<std::string, int> _vehicleMap;
   std::unordered_map<Type, ParkingInfo> _availableMap;
-  void parkHelper(Vehicle &v);
+  void parkHelper(Vehicle *v, Type type);
 };
 
 #endif

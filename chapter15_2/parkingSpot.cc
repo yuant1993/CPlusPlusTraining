@@ -12,11 +12,11 @@ ParkingSpot::ParkingSpot(int parkingFloorId, ParkingLotManager* plm, Type type) 
     if (availableMap.count(type) == 0) {
       ParkingInfo parkingInfo(type);
       parkingInfo.setSpotsMap(parkingFloorId, _spotId, true);
-      plm -> setAvailableMap(type, parkingInfo);
+      plm -> setAvailableMap(type, parkingInfo, true);
     } else {
       ParkingInfo parkingInfo = availableMap[type];
       parkingInfo.setSpotsMap(parkingFloorId, _spotId, true);
-      plm -> setAvailableMap(type, parkingInfo);
+      plm -> setAvailableMap(type, parkingInfo, true);
     }
 
     std::vector<ParkingFloor*> parkingFloors = plm -> getParkingFloors();
